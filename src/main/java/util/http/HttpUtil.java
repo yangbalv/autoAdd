@@ -422,7 +422,7 @@ public class HttpUtil {
         objectMap.put("YDDH", companyResponseDto.getRECORD().getYDDH());
         objectMap.put("DH3", companyResponseDto.getRECORD().getDH3());
 //        静态页面取值
-        objectMap.put("sszzjg_mc",sszzjg_mc);
+        objectMap.put("sszzjg_mc", sszzjg_mc);
         objectMap.put("sszzjg_dm", sszzjg_dm);
         objectMap.put("FWRY_ZZJG_DM", sszzjg_dm);
         objectMap.put("FWRY_ZZJG_MC", sszzjg_mc);
@@ -508,7 +508,9 @@ public class HttpUtil {
         }
 
 //        System.out.println(sb.toString());
-
+        String headerField = httpURLConnection.getHeaderField("set-cookie");
+        String s = headerField.split(";")[0].split("=")[1];
+        System.out.println(s);
         logger.info(" end the postRequest of url: {}", toUrl);
         return sb.toString();
     }
