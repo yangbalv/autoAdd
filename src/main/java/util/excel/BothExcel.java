@@ -207,7 +207,7 @@ public class BothExcel {
                             if (companyName != null) {
                                 String message = companyName.toString();
                                 message = message.replaceAll(" ", "");
-                                companyDetail.setCompanyName(message);
+                                companyDetail.setCompanyName(message.trim());
                             }
                             Cell addTime = row.getCell(addTimeIndex);
                             if (addTime != null) {

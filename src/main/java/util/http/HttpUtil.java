@@ -253,6 +253,7 @@ public class HttpUtil {
         int responseCode = httpURLConnection.getResponseCode();
         if (responseCode != HttpURLConnection.HTTP_OK) {
             logger.info("bed request for: {},responseCode is: {}, and the request is: ", toUrl, responseCode);
+            System.out.println("bed request for: " + toUrl + ",responseCode is: " + responseCode + ", and the request is: ");
         }
 
         InputStream stream = new GZIPInputStream(httpURLConnection.getInputStream());
@@ -389,7 +390,124 @@ public class HttpUtil {
 
         }
 
-        System.out.println(sb.toString());
+//        System.out.println(sb.toString());
+
+        logger.info(" end the postRequest of url: {}", toUrl);
+        return sb.toString();
+    }
+
+
+    public String addMessage2(String toUrl, CompanyResponseDto companyResponseDto, String LRR_DM, String LRR_MC, String JBR_MC, String JBR_DM, String FWRY_MC, String FWRY_DM, String sszzjg_dm, String sszzjg_mc) throws IOException {
+        logger.info("start do addMessage, and the url is : {}", toUrl);
+        Properties properties = PropertiesUtil.getProperties();
+
+
+        URL url = new URL(toUrl);
+        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+        httpURLConnection.setRequestMethod("POST");
+        httpURLConnection.setDoOutput(true);
+        httpURLConnection.setDoInput(true);
+//        使用缓存标识
+        httpURLConnection.setUseCaches(false);
+
+        Map<String, Object> objectMap = new HashMap<>();
+        objectMap.put("KHSH", companyResponseDto.getRECORD().getKHSH());
+        objectMap.put("KHBH", companyResponseDto.getRECORD().getKHBH());
+        objectMap.put("PYT", properties.getProperty("PYT"));
+        objectMap.put("editTage", properties.getProperty("editTage"));
+        objectMap.put("KHMC", companyResponseDto.getRECORD().getKHMC());
+        objectMap.put("DZ", companyResponseDto.getRECORD().getTXDZ());
+        objectMap.put("LXRMC", companyResponseDto.getRECORD().getLXR());
+        objectMap.put("GDDH", companyResponseDto.getRECORD().getGDDH());
+        objectMap.put("YDDH", companyResponseDto.getRECORD().getYDDH());
+        objectMap.put("DH3", companyResponseDto.getRECORD().getDH3());
+//        静态页面取值
+        objectMap.put("sszzjg_mc",sszzjg_mc);
+        objectMap.put("sszzjg_dm", sszzjg_dm);
+        objectMap.put("FWRY_ZZJG_DM", sszzjg_dm);
+        objectMap.put("FWRY_ZZJG_MC", sszzjg_mc);
+//        回访人
+        objectMap.put("JBR_MC", JBR_MC);
+        objectMap.put("JBR_DM", JBR_DM);
+        objectMap.put("FWRY_MC", FWRY_MC);
+        objectMap.put("FWRY_DM", FWRY_DM);
+//        配置值
+        objectMap.put("ZZDJH", properties.getProperty("ZZDJH"));
+        objectMap.put("ZZDJH_TEMP", properties.getProperty("ZZDJH_TEMP"));
+        objectMap.put("ZZDJH_SAME", properties.getProperty("ZZDJH_SAME"));
+
+        objectMap.put("hf_bz", properties.getProperty("hf_bz"));
+//税控盘
+        objectMap.put("FWCP_DM", properties.getProperty("FWCP_DM"));
+        objectMap.put("OTHER", properties.getProperty("OTHER"));
+//        CPYXQK=正常
+//        CLBF=收费
+        objectMap.put("CPYXQK", properties.getProperty("CPYXQK"));
+        objectMap.put("CLBF", properties.getProperty("CLBF"));
+
+//        0 很满意
+        objectMap.put("FWPJ", properties.getProperty("FWPJ"));
+//
+        objectMap.put("FWZTPJYY", properties.getProperty("FWZTPJYY"));
+        objectMap.put("FWZTPJ", properties.getProperty("FWZTPJ"));
+
+        objectMap.put("LRR_DM", LRR_DM);
+        //金磊1
+        objectMap.put("LRR_MC", LRR_MC);
+//        公司产品总体评价
+        objectMap.put("CPPJ", properties.getProperty("CPPJ"));
+        objectMap.put("CPZTPJYY", properties.getProperty("CPZTPJYY"));
+        objectMap.put("CPZTPJ", properties.getProperty("CPZTPJ"));
+
+        objectMap.put("HFKSSJ", companyResponseDto.getAddTime());
+        objectMap.put("qxxkdm", properties.getProperty("qxxkdm"));
+
+
+        String message = makeGetUrl(objectMap, true);
+
+        String cookie;
+        String JSESSIONID = properties.getProperty("JSESSIONID");
+        cookie = "JSESSIONID=" + JSESSIONID;
+
+        httpURLConnection.setRequestProperty("Accept", properties.getProperty("Accept"));
+        httpURLConnection.setRequestProperty("Accept-Language", properties.getProperty("Accept-Language"));
+        httpURLConnection.setRequestProperty("Content-Type", properties.getProperty("Content-Type"));
+        httpURLConnection.setRequestProperty("Accept-Encoding", properties.getProperty("Accept-Encoding"));
+        httpURLConnection.setRequestProperty("User-Agent", properties.getProperty("User-Agent"));
+//        Referer放置到请求头中
+//        httpURLConnection.setRequestProperty("Referer", Referer);
+        httpURLConnection.setRequestProperty("Cookie", cookie);
+
+
+        httpURLConnection.connect();
+
+
+//        message数据写入body中
+        OutputStream outputStream = httpURLConnection.getOutputStream();
+        outputStream.write((message).getBytes());
+        outputStream.flush();
+        outputStream.close();
+
+        int responseCode = httpURLConnection.getResponseCode();
+        if (responseCode != HttpURLConnection.HTTP_OK) {
+            logger.info("bed request for: {},responseCode is: {}, and the request ", toUrl, responseCode);
+        }
+
+        InputStream stream = new GZIPInputStream(httpURLConnection.getInputStream());
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "utf-8"));
+
+        StringBuffer sb = new StringBuffer();
+
+        String line = "";
+
+        while ((line = reader.readLine()) != null) {
+
+            sb.append(line);
+
+        }
+
+//        System.out.println(sb.toString());
 
         logger.info(" end the postRequest of url: {}", toUrl);
         return sb.toString();

@@ -32,10 +32,12 @@ public class Step {
         HttpUtil httpUtil = new HttpUtil();
 
         String xml = httpUtil.getCompanyMessage(url, companyDetail);
+        System.out.println(xml);
 
         XmlUtilOne xmlUtilOne = new XmlUtilOne();
         CompanyResponseDto companyResponseDto = xmlUtilOne.analysisCompanyResponse(xml);
         companyResponseDto.setAddTime(companyDetail.getAddTime());
+
 
         return companyResponseDto;
     }
@@ -57,7 +59,7 @@ public class Step {
         for (CompanyDetail companyDetail : companyDetails) {
             CompanyResponseDto companyResponseDto = step.step2(companyDetail);
             System.out.println(companyResponseDto);
-            step.step3(companyResponseDto);
+//            step.step3(companyResponseDto);
         }
     }
 }
