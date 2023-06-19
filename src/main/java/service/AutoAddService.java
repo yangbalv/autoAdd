@@ -35,7 +35,7 @@ public class AutoAddService {
         while ((line = bufferedReader.readLine()) != null) {
             stringBuffer.append(line + "\n");
         }
-        logger.info(" end the postRequest of url: {}", toUrl);
+        logger.info(" end the postRequest of url: {}", checkCodeUrl);
         return responseDto;
     }
 }
