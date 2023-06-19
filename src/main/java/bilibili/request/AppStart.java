@@ -36,7 +36,7 @@ public class AppStart {
         appStart.AppStart();
     }
 
-    public void authorize(String action, String contentMd5, String signatureNonce) throws IOException {
+    public void authorize(String action, String contentMd5, String signatureNonce, String jsonString) throws IOException {
         String head = "https://live-open.biliapi.com";
 //        String action = "/v2/app/start";
         String path = head + action;
@@ -66,6 +66,7 @@ public class AppStart {
                 "x-bili-signature-version:" + signatureVersion + "\n" +
                 "x-bili-timestamp:" + timestamp;
         String Authorization = HMACSHA256.sha256_HMAC(needSign, accessKeySecret);
+        System.out.println("Authorization is:" + Authorization);
 
 
         httpURLConnection.setRequestProperty("Accept", "application/json");
@@ -83,7 +84,7 @@ public class AppStart {
 
 //        message数据写入body中
         OutputStream outputStream = httpURLConnection.getOutputStream();
-//        outputStream.write((message).getBytes());
+        outputStream.write((jsonString).getBytes());
         outputStream.flush();
         outputStream.close();
 
@@ -117,12 +118,14 @@ public class AppStart {
 //        app_id	是	integer(13位长度的数值，注意不要用普通int，会溢出的)	项目ID
         String action = "/v2/app/start";
         Map<String, Object> params = new HashMap<>();
-        params.put("code", "3461578856860568");
-        params.put("app_id", 3463268406164140l);
+        params.put("code", "CONPD7EKD0JK8");
+        params.put("app_id", 3463268406164140L);
         String jsonString = JSONObject.toJSONString(params);
-        String contentMd5 = md5(jsonString);
+        System.out.println("jsonString is:"+jsonString);
+        String contentMd5 = MD5Utils.md5(jsonString);
+        System.out.println("contentMd5 is:"+contentMd5);
         String signatureNonce = "aa";
-        authorize(action, contentMd5, signatureNonce);
+        authorize(action, contentMd5, signatureNonce,jsonString);
     }
 
 
@@ -130,6 +133,19 @@ public class AppStart {
         byte[] dataBytes = data.getBytes();
         return md5(dataBytes);
     }
+//
+//
+//    jsonString is:{"code":"CONPD7EKD0JK8","app_id":3463268406164140}
+//    contentMd5 is:19fd157e50816bd2dbb06e138943de65
+//    872bfeb5d1ad20aac2314f6413ae163824b5c1d2f872dc963a2edd691266ffe6
+//    Authorization is:872bfeb5d1ad20aac2314f6413ae163824b5c1d2f872dc963a2edd691266ffe6
+//    {"code":4012,"message":"MD5校验失败","request_id":"1670844630256238592","data":null}
+
+//    jsonString is:{"code":"CONPD7EKD0JK8","app_id":3463268406164140}
+//    contentMd5 is:19fd157e50816bd2dbb06e138943de65
+//76db5fe9669d30563b3dec52b56b44ecbeaed1577e472cc67c1672ee7643be91
+//    Authorization is:76db5fe9669d30563b3dec52b56b44ecbeaed1577e472cc67c1672ee7643be91
+//    {"code":4012,"message":"MD5校验失败","request_id":"1670845502608543744","data":null}
 
     /**
      * md5
