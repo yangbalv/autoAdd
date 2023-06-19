@@ -1,14 +1,26 @@
 package bilibili.request;
 
-import java.io.IOException;
+import com.alibaba.fastjson.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import util.http.HttpUtil;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Time;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.zip.GZIPInputStream;
 
 public class AppStart {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     //    Request Header
 //    Accept	String	是	接受的返回结果的类型。目前只支持JSON类型，取值：application/json。
 //    Content-Type	String	是	当前请求体（Request Body）的数据类型。目前只支持JSON类型，取值：application/json。
@@ -24,9 +36,9 @@ public class AppStart {
         appStart.AppStart();
     }
 
-    public void AppStart() throws IOException {
+    public void authorize(String action, String contentMd5, String signatureNonce) throws IOException {
         String head = "https://live-open.biliapi.com";
-        String action = "/v2/app/start";
+//        String action = "/v2/app/start";
         String path = head + action;
         String accessKeySecret = "iZiqOAXaTQAuABux65aBrMIm7IvZSk";
 
@@ -40,10 +52,10 @@ public class AppStart {
 
         Calendar canlender = Calendar.getInstance();
         Long timeInMillis = canlender.getTimeInMillis();
-        String contentMd5 = "";
+//        String contentMd5 = "";
         String timestamp = timeInMillis.toString();
         String signatureMethod = "HMAC-SHA256";
-        String signatureNonce = "";
+//        String signatureNonce = "";
         String accessKeyId = "YblHh6OvUc0L29WOqJboMv3l";
         String signatureVersion = "1.0";
 
@@ -66,6 +78,84 @@ public class AppStart {
         httpURLConnection.setRequestProperty("x-bili-signature-version", signatureVersion);
         httpURLConnection.setRequestProperty("Authorization", Authorization);
 
+        httpURLConnection.connect();
 
+
+//        message数据写入body中
+        OutputStream outputStream = httpURLConnection.getOutputStream();
+//        outputStream.write((message).getBytes());
+        outputStream.flush();
+        outputStream.close();
+
+        int responseCode = httpURLConnection.getResponseCode();
+        if (responseCode != HttpURLConnection.HTTP_OK) {
+            logger.info("bed request for: {},responseCode is: {}, and the request ", path, responseCode);
+        }
+
+
+        InputStream stream = httpURLConnection.getInputStream();
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "utf-8"));
+
+        StringBuffer sb = new StringBuffer();
+
+        String line = "";
+
+        while ((line = reader.readLine()) != null) {
+
+            sb.append(line);
+
+        }
+        System.out.println(sb);
+        logger.info(sb.toString());
+
+        logger.info(" end the postRequest of url: {}", path);
+    }
+
+    public void AppStart() throws IOException {
+//        code	是	string	[主播身份码]
+//        app_id	是	integer(13位长度的数值，注意不要用普通int，会溢出的)	项目ID
+        String action = "/v2/app/start";
+        Map<String, Object> params = new HashMap<>();
+        params.put("code", "3461578856860568");
+        params.put("app_id", 3463268406164140l);
+        String jsonString = JSONObject.toJSONString(params);
+        String contentMd5 = md5(jsonString);
+        String signatureNonce = "aa";
+        authorize(action, contentMd5, signatureNonce);
+    }
+
+
+    public static String md5(String data) {
+        byte[] dataBytes = data.getBytes();
+        return md5(dataBytes);
+    }
+
+    /**
+     * md5
+     */
+    public static String md5(byte[] data) {
+        char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+        // 获得MD5摘要算法的 MessageDigest 对象
+        MessageDigest mdInst = null;
+        try {
+            mdInst = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        // 使用指定的字节更新摘要
+        mdInst.update(data);
+        // 获得密文
+        byte[] md = mdInst.digest();
+        // 把密文转换成十六进制的字符串形式
+        int j = md.length;
+        char str[] = new char[j * 2];
+        int k = 0;
+        for (int i = 0; i < j; i++) {
+            byte byte0 = md[i];
+            str[k++] = hexDigits[byte0 >>> 4 & 0xf];
+            str[k++] = hexDigits[byte0 & 0xf];
+        }
+        return new String(str);
     }
 }
