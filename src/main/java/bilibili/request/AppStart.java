@@ -1,177 +1,93 @@
 package bilibili.request;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.http.HttpUtil;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Time;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.zip.GZIPInputStream;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class AppStart {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+    String action = "/v2/app/start";
+    String code = "CONPD7EKD0JK8";
+    long app_id = 3463268406164140L;
+    String signatureNonce;
 
-    //    Request Header
-//    Accept	String	是	接受的返回结果的类型。目前只支持JSON类型，取值：application/json。
-//    Content-Type	String	是	当前请求体（Request Body）的数据类型。目前只支持JSON类型，取值：application/json。
-//    x-bili-content-md5	String	是	请求体的编码值，根据请求体计算所得。算法说明：将请求体内容当作字符串进行MD5编码。
-//    x-bili-timestamp	String	是	unix时间戳，单位是秒。请求时间戳不能超过当前时间10分钟，否则请求会被丢弃。
-//    x-bili-signature-method	String	是	签名方式。取值：HMAC-SHA256
-//    x-bili-signature-nonce	String	是	签名唯一随机数。用于防止网络重放攻击，建议您每一次请求都使用不同的随机数。
-//    x-bili-accesskeyid	String	是	AccessKeyId
-//    x-bili-signature-version	String	是	1.0
-//    Authorization	String	是	请求签名（注意生成的签名是小写的）。关于请求签名的计算方法，请参见签名机制
+    String start;
+
+    public AppStart() {
+    }
+
+    public AppStart(String signatureNonce) {
+        this.signatureNonce = signatureNonce;
+    }
+
+
     public static void main(String[] args) throws IOException {
-        AppStart appStart = new AppStart();
-        appStart.AppStart();
+        String signatureNonce = "start11";
+        AppStart appStart = new AppStart(signatureNonce);
+        String start = appStart.appStart();
+        System.out.println("start is: " + start);
+
+
+        Thread thread = new Thread() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                super.run();
+                while (true) {
+
+                    HeartBeat heartBeat = new HeartBeat(start, signatureNonce);
+                    try {
+                        String heartbeat = heartBeat.heartbeat();
+                        System.out.println("heartbeat is:" + heartbeat);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    String format = "yyyy-MM-dd HH:mm:ss";
+                    Date date = new Date();
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+                    String message = simpleDateFormat.format(date);
+                    System.out.println("当前时间" + message);
+                    sleep(20 * 1000);
+
+                }
+            }
+        };
+        thread.start();
+        System.out.println("线程已经开启");
     }
 
-    public void authorize(String action, String contentMd5, String signatureNonce, String jsonString) throws IOException {
-        String head = "https://live-open.biliapi.com";
-//        String action = "/v2/app/start";
-        String path = head + action;
-        String accessKeySecret = "iZiqOAXaTQAuABux65aBrMIm7IvZSk";
-
-        URL url = new URL(path);
-        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-        httpURLConnection.setRequestMethod("POST");
-        httpURLConnection.setDoOutput(true);
-        httpURLConnection.setDoInput(true);
-//        使用缓存标识
-        httpURLConnection.setUseCaches(false);
-
-        Calendar canlender = Calendar.getInstance();
-        Long timeInMillis = canlender.getTimeInMillis();
-//        String contentMd5 = "";
-        String timestamp = timeInMillis.toString();
-        String signatureMethod = "HMAC-SHA256";
-//        String signatureNonce = "";
-        String accessKeyId = "YblHh6OvUc0L29WOqJboMv3l";
-        String signatureVersion = "1.0";
-
-        String needSign = "x-bili-accesskeyid:" + accessKeyId + "\n" +
-                "x-bili-content-md5:" + contentMd5 + "\n" +
-                "x-bili-signature-method:" + signatureMethod + "\n" +
-                "x-bili-signature-nonce:" + signatureNonce + "\n" +
-                "x-bili-signature-version:" + signatureVersion + "\n" +
-                "x-bili-timestamp:" + timestamp;
-        String Authorization = HMACSHA256.sha256_HMAC(needSign, accessKeySecret);
-        System.out.println("Authorization is:" + Authorization);
-
-
-        httpURLConnection.setRequestProperty("Accept", "application/json");
-        httpURLConnection.setRequestProperty("Content-Type", "application/json");
-        httpURLConnection.setRequestProperty("x-bili-content-md5", contentMd5);
-        httpURLConnection.setRequestProperty("x-bili-timestamp", timestamp);
-        httpURLConnection.setRequestProperty("x-bili-signature-method", signatureMethod);
-        httpURLConnection.setRequestProperty("x-bili-signature-nonce", signatureNonce);
-        httpURLConnection.setRequestProperty("x-bili-accesskeyid", accessKeyId);
-        httpURLConnection.setRequestProperty("x-bili-signature-version", signatureVersion);
-        httpURLConnection.setRequestProperty("Authorization", Authorization);
-
-        httpURLConnection.connect();
-
-
-//        message数据写入body中
-        OutputStream outputStream = httpURLConnection.getOutputStream();
-        outputStream.write((jsonString).getBytes());
-        outputStream.flush();
-        outputStream.close();
-
-        int responseCode = httpURLConnection.getResponseCode();
-        if (responseCode != HttpURLConnection.HTTP_OK) {
-            logger.info("bed request for: {},responseCode is: {}, and the request ", path, responseCode);
-        }
-
-
-        InputStream stream = httpURLConnection.getInputStream();
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "utf-8"));
-
-        StringBuffer sb = new StringBuffer();
-
-        String line = "";
-
-        while ((line = reader.readLine()) != null) {
-
-            sb.append(line);
-
-        }
-        System.out.println(sb);
-        logger.info(sb.toString());
-
-        logger.info(" end the postRequest of url: {}", path);
+    @Override
+    protected void finalize() throws Throwable {
+        AppEnd appEnd = new AppEnd(start, signatureNonce);
+        String append = appEnd.append();
+        System.out.println("append is: " + append);
     }
 
-    public void AppStart() throws IOException {
+    public String appStart() throws IOException {
 //        code	是	string	[主播身份码]
 //        app_id	是	integer(13位长度的数值，注意不要用普通int，会溢出的)	项目ID
-        String action = "/v2/app/start";
+
         Map<String, Object> params = new HashMap<>();
-        params.put("code", "CONPD7EKD0JK8");
-        params.put("app_id", 3463268406164140L);
+        params.put("code", code);
+        params.put("app_id", app_id);
         String jsonString = JSONObject.toJSONString(params);
-        System.out.println("jsonString is:"+jsonString);
+        System.out.println("jsonString is:" + jsonString);
         String contentMd5 = MD5Utils.md5(jsonString);
-        System.out.println("contentMd5 is:"+contentMd5);
-        String signatureNonce = "aa";
-        authorize(action, contentMd5, signatureNonce,jsonString);
+        System.out.println("contentMd5 is:" + contentMd5);
+
+        Author author = new Author();
+        String response = author.authorize(action, contentMd5, signatureNonce, jsonString);
+        start = response;
+        return response;
     }
 
-
-    public static String md5(String data) {
-        byte[] dataBytes = data.getBytes();
-        return md5(dataBytes);
-    }
-//
-//
-//    jsonString is:{"code":"CONPD7EKD0JK8","app_id":3463268406164140}
-//    contentMd5 is:19fd157e50816bd2dbb06e138943de65
-//    872bfeb5d1ad20aac2314f6413ae163824b5c1d2f872dc963a2edd691266ffe6
-//    Authorization is:872bfeb5d1ad20aac2314f6413ae163824b5c1d2f872dc963a2edd691266ffe6
-//    {"code":4012,"message":"MD5校验失败","request_id":"1670844630256238592","data":null}
-
-//    jsonString is:{"code":"CONPD7EKD0JK8","app_id":3463268406164140}
-//    contentMd5 is:19fd157e50816bd2dbb06e138943de65
-//76db5fe9669d30563b3dec52b56b44ecbeaed1577e472cc67c1672ee7643be91
-//    Authorization is:76db5fe9669d30563b3dec52b56b44ecbeaed1577e472cc67c1672ee7643be91
-//    {"code":4012,"message":"MD5校验失败","request_id":"1670845502608543744","data":null}
-
-    /**
-     * md5
-     */
-    public static String md5(byte[] data) {
-        char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
-        // 获得MD5摘要算法的 MessageDigest 对象
-        MessageDigest mdInst = null;
-        try {
-            mdInst = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        // 使用指定的字节更新摘要
-        mdInst.update(data);
-        // 获得密文
-        byte[] md = mdInst.digest();
-        // 把密文转换成十六进制的字符串形式
-        int j = md.length;
-        char str[] = new char[j * 2];
-        int k = 0;
-        for (int i = 0; i < j; i++) {
-            byte byte0 = md[i];
-            str[k++] = hexDigits[byte0 >>> 4 & 0xf];
-            str[k++] = hexDigits[byte0 & 0xf];
-        }
-        return new String(str);
-    }
 }
