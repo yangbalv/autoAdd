@@ -64,7 +64,7 @@ public class HeartBeat {
         JSONObject data = (JSONObject) parse.get("data");
         JSONObject game_info = (JSONObject) data.get("game_info");
         String game_id = (String) game_info.get("game_id");
-        System.out.println(game_id);
+//        System.out.println(game_id);
         Map<String, Object> params = new HashMap<>();
 //        params.put("app_id", APP_ID);
         params.put("game_id", game_id);

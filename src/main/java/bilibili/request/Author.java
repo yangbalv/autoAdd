@@ -22,7 +22,7 @@ public class Author {
         String jsonString = JSONObject.toJSONString(params);
         System.out.println("jsonString is:" + jsonString);
         String contentMd5 = MD5Utils.md5(jsonString);
-        System.out.println("contentMd5 is:" + contentMd5);
+//        System.out.println("contentMd5 is:" + contentMd5);
         return authorize(action, contentMd5, signatureNonce, jsonString);
     }
 
@@ -43,7 +43,7 @@ public class Author {
         Calendar canlender = Calendar.getInstance();
         Long timeInMillis = canlender.getTimeInMillis();
         String timestamp = timeInMillis.toString();
-        System.out.println("timestamp is: " + timestamp);
+//        System.out.println("timestamp is: " + timestamp);
 
 
         String needSign = "x-bili-accesskeyid:" + accessKeyId + "\n" +
@@ -53,7 +53,7 @@ public class Author {
                 "x-bili-signature-version:" + signatureVersion + "\n" +
                 "x-bili-timestamp:" + timestamp;
         String Authorization = HMACSHA256.sha256_HMAC(needSign, accessKeySecret);
-        System.out.println("Authorization is:" + Authorization);
+//        System.out.println("Authorization is:" + Authorization);
 
 
         httpURLConnection.setRequestProperty("Accept", "application/json");

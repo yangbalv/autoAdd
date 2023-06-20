@@ -21,7 +21,6 @@ public class AppStart {
     String start;
 
 
-
     public String appStart() throws IOException {
 //        code	是	string	[主播身份码]
 //        app_id	是	integer(13位长度的数值，注意不要用普通int，会溢出的)	项目ID
@@ -36,6 +35,11 @@ public class AppStart {
         String signatureNonce = "appStart" + nowTime;
         Author author = new Author();
         String response = author.authorize(action, contentMd5, signatureNonce, jsonString);
+        JSONObject parse = JSONObject.parseObject(response);
+        JSONObject data = (JSONObject) parse.get("data");
+        JSONObject websocket_info = (JSONObject) data.get("websocket_info");
+        String auth_body = (String) websocket_info.get("auth_body");
+        System.out.println("auth_body is: " + auth_body);
         start = response;
         return response;
     }
