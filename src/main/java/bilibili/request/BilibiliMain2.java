@@ -2,12 +2,12 @@ package bilibili.request;
 
 import java.io.IOException;
 
-public class BilibiliMain {
+public class BilibiliMain2 {
     public static void main(String[] args) throws IOException, InterruptedException {
-        BilibiliMain bilibiliMain = new BilibiliMain();
-        bilibiliMain.startApp();
-        Thread.sleep(3 * 60 * 1000);
-        System.out.println("关闭线程");
+        BilibiliMain2 bilibiliMain = new BilibiliMain2();
+//        bilibiliMain.startApp();
+//        Thread.sleep(3 * 60 * 1000);
+//        System.out.println("关闭线程");
         bilibiliMain.endApp();
     }
 

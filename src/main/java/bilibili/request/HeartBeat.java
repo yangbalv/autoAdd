@@ -35,6 +35,13 @@ public class HeartBeat {
                     try {
                         String heartbeat = heartbeat();
                         System.out.println("heartbeat is:" + heartbeat);
+                        JSONObject parse = (JSONObject) JSONObject.parse(heartbeat);
+                        int code = (int) parse.get("code");
+                        if (code != 0) {
+                            System.out.println("请求失败了，任务结束");
+                            break;
+                        }
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
