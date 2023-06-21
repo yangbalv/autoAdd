@@ -45,7 +45,7 @@ public class HeartBeat {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    String format = "yyyy-MM-dd HH:mm:ss";
+                    String format = "yyyy-MM-dd HH:mm:ss:SSS";
                     Date date = new Date();
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
                     String message = simpleDateFormat.format(date);

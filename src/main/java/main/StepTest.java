@@ -103,7 +103,7 @@ public class StepTest {
                 throw new RuntimeException(e);
             }
 //
-            String format = "yyyy-MM-dd HH:mm:ss";
+            String format = "yyyy-MM-dd HH:mm:ss:SSS";
             Date date = new Date();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
             String message = simpleDateFormat.format(date);
@@ -118,7 +118,7 @@ public class StepTest {
 //            Random random = new Random();
 //            random.setSeed(10000L);
 //            int randomInt = random.nextInt(10000);
-//            String format = "yyyy-MM-dd HH:mm:ss";
+//            String format = "yyyy-MM-dd HH:mm:ss:SSS";
 //            Date date = new Date();
 //            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
 //            String message = simpleDateFormat.format(date);
