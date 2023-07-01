@@ -74,33 +74,16 @@ public class StepTest2 {
         String requestzsf = "KHSH=91310120MA1HRDBW9U&KHBH=xj1905131616140001&PYT=&editTage=N&KHMC=%E4%B8%8A%E6%B5%B7%E8%88%9C%E4%BF%A1%E5%BB%BA%E7%AD%91%E8%A3%85%E9%A5%B0%E8%AE%BE%E8%AE%A1%E5%B7%A5%E7%A8%8B%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&DZ=%E7%9F%B3%E9%BE%99%E8%B7%AF345%E5%BC%843%E5%8F%B7%E5%8F%A3%EF%BC%88%E6%9D%B0%E5%88%9D%E6%99%BA%E5%9B%AD%EF%BC%899%E5%B9%A2502%E5%AE%A4&LXRMC=%E5%BC%A0%E4%BF%A1&GDDH=17721126866&YDDH=17721126866&DH3=&sszzjg_mc=%E5%85%89%E6%98%8E%E5%8A%9E%E4%BA%8B%E5%A4%84&sszzjg_dm=1911071636050001&FWRY_ZZJG_DM=1911071636050001&FWRY_ZZJG_MC=%E5%85%89%E6%98%8E%E5%8A%9E%E4%BA%8B%E5%A4%84&JBR_MC=%E5%BC%A0%E6%B7%91%E8%8A%AC&JBR_DM=2106181057340001&FWRY_MC=%E5%BC%A0%E6%B7%91%E8%8A%AC&FWRY_DM=2106181057340001&ZZDJH=1&ZZDJH_TEMP=&ZZDJH_SAME=&hf_bz=N&FWCP_DM=2&OTHER=&CPYXQK=%E6%AD%A3%E5%B8%B8&CLBF=%E6%94%B6%E8%B4%B9&FWPJ=0&FWZTPJYY=%E6%97%A0&FWZTPJ=0&LRR_DM=1909231647080001&LRR_MC=%E9%87%91%E7%A3%8A1&CPPJ=0&CPZTPJYY=%E6%97%A0&CPZTPJ=0&HFKSSJ=2023-04-27&qxxkdm=11191";
         String requesths = "KHSH=91310120MA1HKBF17K&KHBH=xj1603181222249001&PYT=&editTage=N&KHMC=%E4%B8%8A%E6%B5%B7%E6%9C%9B%E8%B0%B7%E5%AE%A4%E5%86%85%E8%A3%85%E9%A5%B0%E8%AE%BE%E8%AE%A1%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&DZ=%E5%BE%90%E6%B1%87%E5%8C%BA%E6%96%87%E5%AE%9A%E8%B7%AF258%E5%8F%B7c211%E5%AE%A4&LXRMC=%E5%AD%99%E8%83%9C%E5%9B%BD&GDDH=15618048948&YDDH=15618048948&DH3=&sszzjg_mc=%E5%8D%97%E6%A1%A5%E5%8A%9E%E4%BA%8B%E5%A4%84&sszzjg_dm=1911071636070001&FWRY_ZZJG_DM=1911071636070001&FWRY_ZZJG_MC=%E5%8D%97%E6%A1%A5%E5%8A%9E%E4%BA%8B%E5%A4%84&JBR_MC=%E9%BB%84%E7%8F%8A1&JBR_DM=2106281349000001&FWRY_MC=%E9%BB%84%E7%8F%8A1&FWRY_DM=2106281349000001&ZZDJH=1&ZZDJH_TEMP=&ZZDJH_SAME=&hf_bz=N&FWCP_DM=2&OTHER=&CPYXQK=%E6%AD%A3%E5%B8%B8&CLBF=%E6%94%B6%E8%B4%B9&FWPJ=0&FWZTPJYY=%E6%97%A0&FWZTPJ=0&LRR_DM=2106281349000001&LRR_MC=%E9%BB%84%E7%8F%8A1&CPPJ=0&CPZTPJYY=%E6%97%A0&CPZTPJ=0&HFKSSJ=2023-03-29&qxxkdm=11191";
         String requestlc = "KHSH=91310120599753470F&KHBH=xj1712061519000005&PYT=&editTage=N&KHMC=%E4%B8%8A%E6%B5%B7%E9%9B%80%E7%87%95%E6%9C%BA%E7%94%B5%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8&DZ=%E5%8D%97%E4%BA%AD%E5%85%AC%E8%B7%AF1176%E5%8F%B7&LXRMC=%E6%B2%88%E5%AE%89%E6%85%B0&GDDH=18918368150&YDDH=18918368150&DH3=&sszzjg_mc=%E5%8D%97%E6%A1%A5%E5%8A%9E%E4%BA%8B%E5%A4%84&sszzjg_dm=1911071636070001&FWRY_ZZJG_DM=1911071636070001&FWRY_ZZJG_MC=%E5%8D%97%E6%A1%A5%E5%8A%9E%E4%BA%8B%E5%A4%84&JBR_MC=%E9%99%86%E8%B6%85&JBR_DM=2011041022260001&FWRY_MC=%E9%99%86%E8%B6%85&FWRY_DM=2011041022260001&ZZDJH=1&ZZDJH_TEMP=&ZZDJH_SAME=&hf_bz=N&FWCP_DM=2&OTHER=&CPYXQK=%E6%AD%A3%E5%B8%B8&CLBF=%E6%94%B6%E8%B4%B9&FWPJ=0&FWZTPJYY=%E6%97%A0&FWZTPJ=0&LRR_DM=2011041022260001&LRR_MC=%E9%99%86%E8%B6%85&CPPJ=0&CPZTPJYY=%E6%97%A0&CPZTPJ=0&HFKSSJ=2023-04-27&qxxkdm=11191";
-        String filePath = "F:\\JAVA\\autoAdd-dev\\202305crj\\202305crj";
-        String decode = URLDecoder.decode(requestcrj, "UTF-8");
+        String filePath = "F:\\JAVA\\autoAdd-dev\\202306\\wkn";
+        String decode = URLDecoder.decode(requestwkn, "UTF-8");
 
 
 
-        String failOutputPath = filePath + "failOutPut.txt";
+
         String xlsPath = filePath + ".xlsx";
-        File file = new File(failOutputPath);
 
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-                System.out.println("文件:【" + failOutputPath + "】创建成功");
-            } else {
-                System.out.println("文件:【" + failOutputPath + "】已存在");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-        FileWriter fileWriter = null;
-        try {
-            fileWriter = new FileWriter(failOutputPath);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+
 
 
 
@@ -177,16 +160,12 @@ public class StepTest2 {
 
 
             try {
+                int count = 1;
                 boolean step32 = step.step32(companyResponseDto, LRR_DM, LRR_MC, JBR_MC, JBR_DM, FWRY_MC, FWRY_DM, sszzjg_dm, sszzjg_mc);
-                if (!step32) {
-                    System.out.println("【" + companyResponseDto.getRECORD().getKHMC() + "】公司第一次请求失败");
-                    boolean step321 = step.step32(companyResponseDto, LRR_DM, LRR_MC, JBR_MC, JBR_DM, FWRY_MC, FWRY_DM, sszzjg_dm, sszzjg_mc);
-                    if (!step321) {
-                        System.out.println("【" + companyResponseDto.getRECORD().getKHMC() + "】公司第二次请求失败数据记录");
-                        bufferedWriter.write(companyResponseDto.getRECORD().getKHMC() + "\n");
-                    } else {
-                        System.out.println("【" + companyResponseDto.getRECORD().getKHMC() + "】公司第二次请求成功");
-                    }
+                while (!step32){
+                    System.out.println("【" + companyResponseDto.getRECORD().getKHMC() + "】公司第"+count+"次请求失败");
+                    step32 = step.step32(companyResponseDto, LRR_DM, LRR_MC, JBR_MC, JBR_DM, FWRY_MC, FWRY_DM, sszzjg_dm, sszzjg_mc);
+                    count++;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -219,12 +198,7 @@ public class StepTest2 {
 
         }
 
-        try {
-            bufferedWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+
     }
 
 
