@@ -25,7 +25,7 @@ public class RandomNumber {
         for (int i = 1; i <= reds.length; i++) {
             int randomNum = random.nextInt(redNumber);
             while (redSet.contains(randomNum)) {
-                System.out.println("红球号码(" + randomNum + ")已经出现,重新生成");
+                System.out.println("红球号码(" + (randomNum + 1) + ")已经出现,重新生成");
                 randomNum = random.nextInt(redNumber);
             }
             System.out.println("第" + i + "个红球号码是：" + (randomNum + 1));
