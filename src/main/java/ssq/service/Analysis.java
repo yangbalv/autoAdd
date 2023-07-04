@@ -22,19 +22,14 @@ public class Analysis {
     public static void main(String[] args) {
         Analysis analysis = new Analysis();
         try {
-            analysis.step2();
+            analysis.step1();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void step1() throws IOException {
-        HttpUtil httpUtil = new HttpUtil();
-        String html = httpUtil.doPost("http://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=ssq&issueCount=&issueStart=&issueEnd=&dayStart=&dayEnd=&pageNo=2&pageSize=30&week=&systemType=PC", "");
-        System.out.println(html.replaceAll(" ", ""));
-    }
 
-    public void step2() throws IOException {
+    public void step1() throws IOException {
         String html = "http://www.cwl.gov.cn/cwl_admin/front/cwlkj/search/kjxx/findDrawNotice?name=ssq";
 //        logger.info("start do postRequest, and the url is : {}", toUrl);
 
@@ -56,7 +51,7 @@ public class Analysis {
 
         httpURLConnection.setRequestProperty("Cache-Control", "max-age=0");
         httpURLConnection.setRequestProperty("Connection", "keep-alive");
-//        httpURLConnection.setRequestProperty("Cookie", "HMF_CI=277bc847e20c6111bc6892431c696a8b2c3d611b3ffdaa30d633425d0fc221618c58a7f8ce8fc640e8df62e03e342640a895fe8d9bdaa87251407578b9961084f9");
+        httpURLConnection.setRequestProperty("Cookie", "HMF_CI=277bc847e20c6111bc6892431c696a8bdd774ae81275b0ca2d6d7acbf92f1f63fde8fc58af15fd93bd72b6fe02610d7227953f7cd0bdde07a1e632023f3f565757; Expires=Thu, 03-Aug-23 07:22:59 GMT; Path=/");
         httpURLConnection.setRequestProperty("Host", "www.cwl.gov.cn");
         httpURLConnection.setRequestProperty("Upgrade-Insecure-Requests", "1");
         httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
@@ -65,32 +60,25 @@ public class Analysis {
         httpURLConnection.connect();
 
 
-
-//        message数据写入body中
-//        OutputStream outputStream = httpURLConnection.getOutputStream();
-//        outputStream.write();
-//        outputStream.flush();
-//        outputStream.close();
-        System.out.println(httpURLConnection.getRequestMethod());
-        System.out.println(httpURLConnection.getResponseMessage());
-        System.out.println(httpURLConnection.getRequestProperty("Set-Cookie"));
         Map<String, List<String>> headerFields = httpURLConnection.getHeaderFields();
-        System.out.println(headerFields.get("Set-Cookie"));
-
-        int responseCode = httpURLConnection.getResponseCode();
-        System.out.println(responseCode);
-        if (responseCode != HttpURLConnection.HTTP_OK) {
-            logger.info("bed request for: {},responseCode is: {}", html, responseCode);
+        for (Map.Entry<String, List<String>> stringListEntry : headerFields.entrySet()) {
+            System.out.println("key is: " + stringListEntry.getKey() + "value is: " + stringListEntry.getValue());
         }
 
-        StringBuffer stringBuffer = new StringBuffer();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), "UTF-8"));
-        String line;
-        while ((line = bufferedReader.readLine()) != null) {
-            stringBuffer.append(line + "\n");
+
+        InputStream stream = new GZIPInputStream(httpURLConnection.getInputStream());
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, "utf-8"));
+
+        StringBuffer sb = new StringBuffer();
+
+        String line = "";
+
+        while ((line = reader.readLine()) != null) {
+
+            sb.append(line);
 
         }
-        logger.info(" end the postRequest of url: {}", html);
-        System.out.println(stringBuffer);
+        System.out.println(sb);
     }
 }
