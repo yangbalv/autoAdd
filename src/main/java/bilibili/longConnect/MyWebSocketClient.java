@@ -47,13 +47,13 @@ public class MyWebSocketClient extends WebSocketClient {
 
     public static void main(String[] args) {
         try {
-            MyWebSocketClient client = new MyWebSocketClient("wss://tx-sh-live-comet-02.chat.bilibili.com:443/sub");
+            MyWebSocketClient client = new MyWebSocketClient("wss://tx-bj-live-comet-07.chat.bilibili.com:443/sub");
             client.connect();
             while (!client.getReadyState().equals(WebSocket.READYSTATE.OPEN)) {
                 System.out.println("还没有打开");
             }
             System.out.println("建立websocket连接");
-            client.send("{\"roomid\":30080228,\"protover\":2,\"uid\":8362283907087588,\"key\":\"NAiAah6I3njcHBEXKqi3psSBLCQZkstNBtO36PPV9O6DPmkIncOBWarLxZfMjbA26OQXMzaZi0hWaG4D7XN1SpCLNWhqRS2tf48zFKsepb3C1qTRbMIuGI-2iwRoBOiAcbLRib-YWU9396e-y-RW4JIk0xykHpqa\",\"group\":\"open\"}");
+            client.send(" {\"roomid\":30080228,\"protover\":2,\"uid\":8362283907087588,\"key\":\"kPT-Jy8By5ROuMEnSNeZFVCfO9KuHgDOfgSv7pelHUZlaZSMn9griscV4_eP3yo31-xvZv8aJ_ZbtDJFvRNX9Ky6weIefefYYvchxSAE0MLcKJDYXfTwAs-haoyjVps06obI3l4RLWnGZjJrptD3A4v6BUiagXZSPQ==\",\"group\":\"open\"}");
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

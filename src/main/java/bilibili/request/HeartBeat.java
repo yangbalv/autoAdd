@@ -54,6 +54,12 @@ public class HeartBeat {
 
                 }
             }
+            @Override
+            protected void finalize() throws Throwable {
+
+                BiliMainEnd biliMainEnd = new BiliMainEnd();
+                biliMainEnd.endApp();
+            }
         };
         thread.start();
         System.out.println("线程已经开启");

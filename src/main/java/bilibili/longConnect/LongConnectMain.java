@@ -13,8 +13,8 @@ public class LongConnectMain {
 
     public void LongConnectStart() throws IOException {
         BiliLongConnect biliLongConnect = new BiliLongConnect(
-                "wss://tx-sh-live-comet-11.chat.bilibili.com:443/sub",
-                "{\"roomid\":30080228,\"protover\":2,\"uid\":8362283907087588,\"key\":\"W8KyXWfrg3SPa20J4Iak3uAyZGyzIrjVkJ-syh1Ar7kBNGEQnFjmQiECAXjEuvdB0yPv9IXo6xhN9pVsvCl5Yjx2QDYNyb-CG-YpvggpvXF20NVVQye4vMHFNlRlM3lPtAWIYCJ91ZWStn0OW_g6953JsmbRma4=\",\"group\":\"open\"}\n");
+                "wss://hw-bj-live-comet-05.chat.bilibili.com:443/sub",
+                " {\"roomid\":30080228,\"protover\":2,\"uid\":8362283907087588,\"key\":\"kPT-Jy8By5ROuMEnSNeZFVCfO9KuHgDOfgSv7pelHUZlaZSMn9griscV4_eP3yo31-xvZv8aJ_ZbtDJFvRNX9Ky6weIefefYYvchxSAE0MLcKJDYXfTwAs-haoyjVps06obI3l4RLWnGZjJrptD3A4v6BUiagXZSPQ==\",\"group\":\"open\"}");
 //        biliLongConnect.connect();
         biliLongConnect.longConnectStart();
         biliLongConnect.longConnectHeartbeat();

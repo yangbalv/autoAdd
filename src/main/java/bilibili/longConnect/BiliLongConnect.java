@@ -67,12 +67,13 @@ public class BiliLongConnect {
                 super.run();
                 while (true) {
                     sleep(20 * 1000);
-                    send("");
                     String format = "yyyy-MM-dd HH:mm:ss:SSS";
                     Date date = new Date();
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
                     String message = simpleDateFormat.format(date);
                     System.out.println("当前时间" + message);
+                    send("");
+
 
 
                 }

@@ -1,6 +1,7 @@
 package bilibili.request;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.Data;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +14,13 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Data
 public class AppStart {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     String action = "/v2/app/start";
     String code = "CONPD7EKD0JK8";
     long app_id = 3463268406164140L;
-    String start;
+    static String start;
 
 
     public String appStart() throws IOException {
